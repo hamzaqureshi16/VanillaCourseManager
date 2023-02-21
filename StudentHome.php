@@ -89,7 +89,7 @@ if(isset($_SESSION['id'])){
           echo "<td>" . $row['teacher_name'] . "</td>";
           echo "<td>" . $row['teacher_email'] . "</td>";
           echo "<td><button class='rounded bg-danger p-1'>Unregister</button></td>";
-          echo "<td><button class='rounded bg-danger p-1'>Chat</button></td>";
+          echo "<td><button class='rounded bg-danger p-1'  onclick='Chat($row[t_id])'>Chat</button></td>";
           
           echo "</tr>";
         }
@@ -106,7 +106,10 @@ if(isset($_SESSION['id'])){
 }
 function AvailabelCourse(id) {
   window.location.href = './RegisterStudent.php?uid=' + id;
-  
+}
+function Chat(id){
+    console.log(id);
+    window.location.href = './Chat.php?toid=' + id + '&fromid=' + <?php echo $id?>;
 }
 
 </script>
