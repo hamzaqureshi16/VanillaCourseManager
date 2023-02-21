@@ -33,7 +33,10 @@
             }
             else{
 
-                echo '<script>alert("successfull")</script>';
+                echo '<script>alert("successfull");
+                
+                window.location.href="./StudentHome.php"
+                </script>';
             }
         }
         else{

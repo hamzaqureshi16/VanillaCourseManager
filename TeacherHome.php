@@ -15,6 +15,9 @@
 
 <?php
 session_start();
+if(isset($_SESSION['id'])){
+  $id = $_SESSION['id'];
+}
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-dark">
@@ -29,16 +32,17 @@ session_start();
         <a class="nav-link active text-light" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-ligth" href="/Apply">Apply</a>
+        <a class="nav-link text-ligth" href='#' onclick='AvailabelCourse(<?php echo $id;?>)'>
+          Apply</a>
       </li>
      
 
     </ul>
     <div class = 'd-flex'>
     <h3 class='nav-link m-1 text-light ' style='font-size: larger'> <u><?php
-    if(isset($_SESSION['name']) && isset($_SESSION['id'])){
+    if(isset($_SESSION['name'])){
       echo $_SESSION['name'];
-      $id = $_SESSION['id'];
+
       }
       else{
         header("Location: ./Login.php");
@@ -91,6 +95,10 @@ session_start();
 <script>
   function getStudents(courseId) { 
   window.location.href = './SeeStudents.php?courseId=' + courseId + '&uid=' + <?php echo $id?>;
+}
+function AvailabelCourse(id) {
+  window.location.href = './Available_courses.php?uid=' + id;
+  
 }
 
 </script>

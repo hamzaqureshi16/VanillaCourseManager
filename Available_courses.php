@@ -14,39 +14,40 @@
 <body>
     <table>
         <tbody>
-        <tr>
-            <th>Course Name</th>
-            <th>Department</th>
-            <th>Student Name</th>
-            <th>Registration</th>
-            <th>CGPA</th>
-            <th>Semester</th>
-            <th>Class</th>
-            <th>Chat</th>
-        </tr>
-        <?php
-      include('./PHP/DBConnection.php');
-      $t_id = $_GET['uid'];
-      $c_id = $_GET['courseId'];
-      $sql = "SELECT * FROM student_courses WHERE uid = '$t_id' AND c_id='$c_id'";
-      $result = mysqli_query($conn, $sql);
-      if (mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_assoc($result)) {
-          echo "<tr>";
-          echo "<td>" . $row['c_name'] . "</td>";
-          echo "<td>" . $row['department'] . "</td>";
-          echo "<td>" . $row['name'] . "</td>";
-          echo "<td>" . $row['reg'] . "</td>";
-          echo "<td>" . $row['cgpa'] . "</td>";
-          echo "<td>" . $row['sem'] . "</td>";
-          echo "<td>" . $row['class'] . "</td>"; 
-          echo "<td><Button class='btn rounded p-0 bg-dark text-light'>Chat</Button></td>";
-          echo "</tr>";
-        }
-      }
-      ?>
-        </tbody>
+            <tr>
+                <th>
+                    Course Name
+                </th>
+                <th>
+                    Department
+                </th>
+                <th>
+                    Class
+                </th>
+                <th>
+                    Credit Hours
+                </th>
+                
+            </tr>
 
+            <?php
+            include('./PHP/DBConnection.php');
+            $sql = "SELECT * FROM available_to_teach";
+            $result = mysqli_query($conn, $sql);
+            if(mysqli_num_rows($result) > 0){
+                while($row = mysqli_fetch_assoc($result)){
+                    echo "<tr>";
+                    echo "<td>" . $row['c_name'] . "</td>";
+                    echo "<td>" . $row['department'] . "</td>";
+                    echo "<td>" . $row['class'] . "</td>";
+                    echo "<td>" . $row['c_hours'] . "</td>"; 
+                    echo "<td><Button class='rounded bg-danger p-0'>Apply to Teach</Button></td>";
+                    echo "</tr>";
+                }
+            }
+
+            ?>
+        </tbody>
     </table>
 </body>
 </html>
