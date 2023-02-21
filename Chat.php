@@ -28,6 +28,10 @@
       }
     </style>
   </head>
+  <?php
+    echo "<script type='text/javascript'>var from='$_GET[fromid]'
+    to='$_GET[toid]'</script>";
+  ?>
   <body class="bg-info">
     <div class="container" id='chat'>
       <h1>Chat Page</h1>
@@ -49,7 +53,7 @@
               </div>
             </div>
           </div>
-          <form>
+          <form id='msgform'>
             <div class="form-group">
               <input type="text" class="form-control" id="message-input" placeholder="Type your message here">
             </div>
@@ -58,6 +62,23 @@
         </div>
       </div>
     </div>
+    <script>
+      var msgform=document.getElementById('msgform');
+      msgform.addEventListener('submit',function(e){
+        e.preventDefault();
+        var msg=document.getElementById('message-input').value;
+        var xhttp=new XMLHttpRequest();
+        xhttp.onreadystatechange=function(){
+          if(this.readyState==4 && this.status==200){
+            console.log(this.responseText);
+          }
+        }
+        xhttp.open('POST','./PHP/send-message.php',true);
+        xhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+        xhttp.send('msg='+msg+'&from='+from+'&to='+to);
+      });
+
+    </script>
     <!-- Add Bootstrap JavaScript library -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

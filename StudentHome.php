@@ -79,6 +79,7 @@ if(isset($_SESSION['id'])){
       
       $sql = "SELECT * FROM student_courses WHERE uid = '$id'";
       $result = mysqli_query($conn, $sql);
+      
       if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
           echo "<tr>";
@@ -90,6 +91,7 @@ if(isset($_SESSION['id'])){
           echo "<td>" . $row['teacher_email'] . "</td>";
           echo "<td><button class='rounded bg-danger p-1'>Unregister</button></td>";
           echo "<td><button class='rounded bg-danger p-1'  onclick='Chat($row[t_id])'>Chat</button></td>";
+          
           
           echo "</tr>";
         }
