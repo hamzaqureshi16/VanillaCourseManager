@@ -4,6 +4,8 @@
     <title>Chat Page</title>
     <!-- Add Bootstrap stylesheet -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">   
     <style>
       .chat-bubble {
         max-width: 75%;
@@ -19,10 +21,14 @@
         background-color: #007bff;
         color: white;
         margin-left: auto;
+        text-align: right;
+        width: fit-content;
+          
+
       }
       #chat{ 
         margin: 0 auto;
-        width: 50%;
+        width: 70%;
         margin-left: 25%;
 
       }
@@ -34,49 +40,58 @@
   ?>
   <body class="bg-info">
     <div class="container" id='chat'>
-      <h1>Chat Page</h1>
+      <h1>Chat with <u>
+      <?php 
+      include('./PHP/DBConnection.php');
+      $sql = "SELECT name FROM `users` WHERE `id` = '$_GET[toid]'";
+      $result = $conn->query($sql);
+      $row = $result->fetch_assoc();
+      echo $row['name'];
+      ?>
+      </u></h1>
       <div class="row">
         <div class="col-8">
           <div class="card mb-3">
-            <div class="card-body p-3" style="height: 400px; overflow-y: scroll;">
-              <div class="chat-bubble incoming-chat">
-                <strong>John:</strong> Hi there!
-              </div>
-              <div class="chat-bubble incoming-chat">
-                <strong>Jane:</strong> Hey John, what's up?
-              </div>
-              <div class="chat-bubble outgoing-chat">
-                <strong>You:</strong> Doing good, thanks for asking!
-              </div>
-              <div class="chat-bubble outgoing-chat">
-                <strong>You:</strong> How about you?
+            <div class="card-body p-3" style="height: 400px; overflow-y: scroll;" >
+              <div id='chatarea'>
+
               </div>
             </div>
           </div>
-          <form id='msgform'>
-            <div class="form-group">
+          <form id='msgform' autocomplete="off">
+            <div class="form-group" >
               <input type="text" class="form-control" id="message-input" placeholder="Type your message here">
+              
+              <button type="button" onclick="SendMsg()" class="btn  btn-muted bg-primary  p-1 m-1 " id="submit-button">Send <span class="bi bi-send-fill"></span> </button>
             </div>
-            <button type="submit" class="btn btn-primary" id="submit-button">Send</button>
           </form>
         </div>
       </div>
     </div>
     <script>
-      var msgform=document.getElementById('msgform');
-      msgform.addEventListener('submit',function(e){
-        e.preventDefault();
-        var msg=document.getElementById('message-input').value;
-        var xhttp=new XMLHttpRequest();
-        xhttp.onreadystatechange=function(){
-          if(this.readyState==4 && this.status==200){
-            console.log(this.responseText);
-          }
+      const SendMsg = () =>{
+        const http = new XMLHttpRequest();
+        http.onreadystatechange = ()=>{};
+        http.open('POST',`./PHP/send-message.php`,true);
+        http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        http.send(`from=${from}&to=${to}&message=${document.getElementById('message-input').value}`);
+        document.getElementById('message-input').value = '';
+        http.onload = () => {
+          console.log(http.response);
+        };
+        return false;
+      }
+
+     setInterval(function() {
+      const http = new XMLHttpRequest();
+      http.onreadystatechange = ()=>{
+        if(http.readyState == 4 && http.status == 200){
+          document.getElementById('chatarea').innerHTML = http.responseText;
         }
-        xhttp.open('POST','./PHP/send-message.php',true);
-        xhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-        xhttp.send('msg='+msg+'&from='+from+'&to='+to);
-      });
+      };
+      http.open('GET',`./PHP/get-messages.php?from=${from}&to=${to}`,true);
+      http.send();
+    }, 100);
 
     </script>
     <!-- Add Bootstrap JavaScript library -->

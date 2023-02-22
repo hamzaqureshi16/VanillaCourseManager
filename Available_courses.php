@@ -27,6 +27,9 @@
                 <th>
                     Credit Hours
                 </th>
+                <th>
+                    Apply
+                </th>
                 
             </tr>
 
@@ -41,7 +44,7 @@
                     echo "<td>" . $row['department'] . "</td>";
                     echo "<td>" . $row['class'] . "</td>";
                     echo "<td>" . $row['c_hours'] . "</td>"; 
-                    echo "<td><Button class='rounded bg-danger p-0'>Apply to Teach</Button></td>";
+                    echo "<td><Button class='rounded bg-danger p-1'>Apply to Teach</Button></td>";
                     echo "</tr>";
                 }
             }

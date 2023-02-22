@@ -89,7 +89,7 @@ if(isset($_SESSION['id'])){
           echo "<td>" . $row['class'] . "</td>";
           echo "<td>" . $row['teacher_name'] . "</td>";
           echo "<td>" . $row['teacher_email'] . "</td>";
-          echo "<td><button class='rounded bg-danger p-1'>Unregister</button></td>";
+          echo "<td><button class='rounded bg-danger p-1' onclick='Unregister($id,$row[c_id])'>Unregister</button></td>";
           echo "<td><button class='rounded bg-danger p-1'  onclick='Chat($row[t_id])'>Chat</button></td>";
           
           
@@ -103,6 +103,9 @@ if(isset($_SESSION['id'])){
 
 </table>
 <script>
+  const Unregister = (id,course) =>{
+    window.location.href = './PHP/UnregisterStudent.php?id='+id+'&courseid='+course;
+  }
   function getStudents(courseId) { 
   window.location.href = './SeeStudents.php?courseId=' + courseId + '&uid=' + <?php echo $id?>;
 }

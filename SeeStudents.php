@@ -15,27 +15,27 @@
     <table>
         <tbody>
         <tr>
-            <th>Course Name</th>
-            <th>Department</th>
+            
             <th>Student Name</th>
             <th>Registration</th>
             <th>CGPA</th>
             <th>Semester</th>
-            <th>Class</th>
             <th>Chat</th>
         </tr>
         <?php
       include('./PHP/DBConnection.php');
       $t_id = $_GET['uid'];
       $c_id = $_GET['courseId'];
-      $sql = "SELECT * FROM registered_students WHERE uid = '$t_id' AND c_id='$c_id'";
+      $sql = "SELECT * FROM registered_students WHERE teacher_id = '$t_id' AND c_id='$c_id'";
       $result = mysqli_query($conn, $sql);
       if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
           echo "<tr>";
-          echo "<td>" . $row['name'] . "</td>";
-          echo "<td>" . $row['name'] . "</td>";
-          echo "<td><Button class='btn rounded p-0 bg-dark text-light'>Chat</Button></td>";
+          echo "<td>" . $row['student_name'] . "</td>";
+          echo "<td>" . $row['registration'] . "</td>";
+          echo "<td>" . $row['cgpa'] . "</td>";
+          echo "<td>" . $row['semester'] . "</td>"; 
+          echo "<td><Button class='btn rounded p-1 bg-dark text-light' onclick = 'Chat($row[student_id],$t_id);'>Chat</Button></td>";
           echo "</tr>";
         }
       }
@@ -44,15 +44,9 @@
 
     </table>
 <script>
-    $(document).ready(function(){
-        $('table tr').click(function(){
-            $(this).addClass('selected').siblings().removeClass('selected');    
-            var value=$(this).find('td:first').html();
-            alert(value);    
-        });
-    });
-
-
+  function Chat(id,tid){
+    window.location.href = "./Chat.php?toid="+id+"&fromid="+tid;
+  }
 </script>
   </body>
 </html>

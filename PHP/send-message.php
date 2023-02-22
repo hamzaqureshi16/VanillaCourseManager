@@ -1,16 +1,16 @@
 <?php
-// Check if the request method is POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
-  $message = $_POST['message'];
-  $sender = $_POST['from'];
-  $to = $_POST['to'];
+$from = $_POST['from'];
+$to = $_POST['to'];
+$msg = $_POST['message'];
+include('./DBConnection.php');
+$sql = "INSERT INTO `chat` (`fromid`, `toid`, `message`) VALUES ($from, $to, '$msg')";
+$result = $conn->query($sql);
 
-   
-  header('Content-Type: application/json');
-  echo json_encode(['success' => true]);
-} else {
-  // Send an error response if the request method is not POST
-  header('HTTP/1.1 405 Method Not Allowed');
-  header('Allow: POST');
-  echo 'Method Not Allowed';
-}
+ 
+// include('./DBConnection.php');
+// $from = $_GET['from'];
+// $to = $_GET['to'];
+// $msg = $_GET['message'];
+// $sql = "INSERT INTO `chat` (`fromid`, `toid`, `message`) VALUES ('$from', '$to', '$msg')";
+// $result = $conn->query($sql);
+?>

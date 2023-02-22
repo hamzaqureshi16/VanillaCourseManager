@@ -32,7 +32,7 @@ if(isset($_SESSION['id'])){
         <a class="nav-link active text-light" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-ligth" href='#' onclick='AvailabelCourse(<?php echo $id;?>)'>
+        <a class="nav-link text-primary" href='#' onclick='AvailabelCourse(<?php echo $id;?>)'>
           Apply</a>
       </li>
      
